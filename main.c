@@ -27,5 +27,14 @@ int main()
 			i++;
 		}
 	}
+
+	printf("\nType the initial word\n");
+	char initial_word[4];
+	scanf("%s", initial_word);
+
+	printf("\nType the final word\n");
+	char final_word[4];
+	scanf("%s", final_word);
+
 	return 0;
 }
