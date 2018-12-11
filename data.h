@@ -19,4 +19,10 @@ struct T_SOMMET
     L_SUCC Liste_succ;
 };
 
+typedef struct 
+{
+    T_SOMMET* graphe;
+    int taille;
+} T_GRAPHE;
+
 #endif
