@@ -4,12 +4,15 @@
 #include "data.h"
 
 
+int dico2graph(char* dico, T_GRAPHE* Graphe);
+int isWordInGraphe(char* word, T_GRAPHE* Graphe);
+
 int dico2graph(char* dico, T_GRAPHE* Graphe)
 {
 	if(dico==NULL || Graphe == NULL)
 		return 0;
 
-	if(Graphe->graphe != NULL || Graphe->graphe != 0)
+	if(Graphe->graphe != NULL || Graphe->taille != 0)
 		return 0;
 
 	// Open file
@@ -50,6 +53,19 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
 	return 1;
 }
 
+int isWordInGraphe(char* word, T_GRAPHE* Graphe)
+{
+	if(word == NULL || Graphe == NULL)
+		return 0;
+		
+	for(int i=0; i<Graphe->taille; i++)
+	{	
+		if( strcmp(Graphe->graphe[i].mot, word)==0 )
+			return 1;
+	}
+	return 0;
+}
+
 int main()
 {
 	printf("****  du coq a l'ane  ****\n");
@@ -60,13 +76,41 @@ int main()
 
 	dico2graph("dico.txt", &Graphe);
 
+	int OK = 0;
 	printf("\nType the initial word\n");
-	char initial_word[4];
-	scanf("%s", initial_word);
+	char* initial_word = malloc(4*sizeof(char));
 
+	while( !OK )
+	{
+        scanf("%s", initial_word);
+
+		if( !isWordInGraphe(initial_word, &Graphe) )
+		{
+			fprintf(stderr, "Error : the word is not in the dictionnary, type another word\n");
+			memset(initial_word, 0, 4);
+		}
+		else
+		{
+			OK = 1; 
+		}
+	}
+
+	OK = 0;
 	printf("\nType the final word\n");
-	char final_word[4];
-	scanf("%s", final_word);
+	char* final_word = malloc(4*sizeof(char));;
+	while( !OK )
+	{
+        scanf("%s", final_word);
+		if( !isWordInGraphe(final_word, &Graphe) )
+		{
+			fprintf(stderr, "Error : the word is not in the dictionnary, type another word\n");
+			memset(final_word, 0, 4);
+		}
+		else
+		{
+			OK = 1; 
+		}
+	}
 
 	return 0;
 }
