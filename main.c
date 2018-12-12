@@ -6,6 +6,7 @@
 
 int dico2graph(char* dico, T_GRAPHE* Graphe);
 int isWordInGraphe(char* word, T_GRAPHE* Graphe);
+void displayGraphe(T_GRAPHE* Graphe);
 
 int dico2graph(char* dico, T_GRAPHE* Graphe)
 {
@@ -64,6 +65,16 @@ int isWordInGraphe(char* word, T_GRAPHE* Graphe)
 			return 1;
 	}
 	return 0;
+}
+
+void displayGraphe(T_GRAPHE* Graphe)
+{
+	if(Graphe == NULL)
+		return;
+	printf("\ntaille = %d", Graphe->taille);
+
+	for(int i=0; i<Graphe->taille; i++)
+		printf("\ngraphe[%d].mot = %s", i, Graphe->graphe[i].mot);
 }
 
 int main()
