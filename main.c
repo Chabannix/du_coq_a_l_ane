@@ -7,6 +7,8 @@
 int dico2graph(char* dico, T_GRAPHE* Graphe);
 int isWordInGraphe(char* word, T_GRAPHE* Graphe);
 void displayGraphe(T_GRAPHE* Graphe);
+int isAlphabeSorted(char word1[4], char word2[4]);
+int alphabeSorting(T_GRAPHE* Graphe);
 
 int dico2graph(char* dico, T_GRAPHE* Graphe)
 {
@@ -51,7 +53,54 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
 		sommet.Liste_succ = NULL;
 		Graphe->graphe[i] = sommet;
 	}
+	alphabeSorting(Graphe);
+
 	return 1;
+}
+
+int alphabeSorting(T_GRAPHE* Graphe)
+{
+	if(Graphe == NULL)
+		return 0;
+	
+	// Bubble sorting
+	int size = Graphe->taille;
+	int sorting_over = 0;
+	while( !sorting_over )
+	{
+		sorting_over = 1;
+		for(int i=0; i<size-1; i++)
+		{
+			char* word1 = Graphe->graphe[i].mot;
+			char* word2 = Graphe->graphe[i+1].mot;
+
+			// compare the 2 words and swap them if need be
+			if( !isAlphabeSorted(word1,word2) )
+			{
+				sorting_over = 0;
+				char tmp[4];
+                memcpy(tmp, word2, 4);
+                memcpy(word2, word1, 4);
+                memcpy(word1, tmp, 4);
+			}
+		}
+		size--;
+	}
+	return 1;
+}
+
+int isAlphabeSorted(char word1[4], char word2[4])
+{
+	for(int i=0; i<4; i++)
+	{
+		if(word1[i] < word2[i])
+			return 1;
+		if(word1[i] > word2[i])
+			return 0;
+	}
+
+	//it's the same word
+	return 0;
 }
 
 int isWordInGraphe(char* word, T_GRAPHE* Graphe)
