@@ -9,6 +9,8 @@ int isWordInGraphe(char* word, T_GRAPHE* Graphe);
 void displayGraphe(T_GRAPHE* Graphe);
 int isAlphabeSorted(char word1[4], char word2[4]);
 int alphabeSorting(T_GRAPHE* Graphe);
+void constructSucc(T_GRAPHE* Graphe);
+int isSucc(char word1[4],char word2[4]);
 
 int dico2graph(char* dico, T_GRAPHE* Graphe)
 {
@@ -54,7 +56,7 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
 		Graphe->graphe[i] = sommet;
 	}
 	alphabeSorting(Graphe);
-
+	constructSucc(Graphe);
 	return 1;
 }
 
@@ -116,6 +118,49 @@ int isWordInGraphe(char* word, T_GRAPHE* Graphe)
 	return 0;
 }
 
+void constructSucc(T_GRAPHE* Graphe)
+{
+	if(Graphe == NULL)
+		return;
+		
+	for(int i=0; i<Graphe->taille; i++)
+	{	
+		char* word1 = Graphe->graphe[i].mot;
+		for(int j=0; j<Graphe->taille; j++)
+		{
+			if(j==i)
+				continue;
+
+			char* word2 = Graphe->graphe[j].mot;
+			if( isSucc(word1,word2) )
+			{
+				L_SUCC* Liste_succ = &Graphe->graphe[i].Liste_succ;
+
+				while(*Liste_succ != NULL)
+					Liste_succ = &((*Liste_succ)->suiv);
+
+                (*Liste_succ) = malloc(sizeof(struct lsucc));
+                (*Liste_succ)->val = &Graphe->graphe[j];
+			}
+			
+		}
+	}
+}
+
+int isSucc(char word1[4],char word2[4])
+{
+	int count_letters_in_common = 0;
+	for(int i=0; i<4; i++)
+	{
+		if(word1[i] == word2[i])
+			count_letters_in_common++;
+	}
+	if(count_letters_in_common==3)
+		return 1;
+	else
+		return 0;
+}
+
 void displayGraphe(T_GRAPHE* Graphe)
 {
 	if(Graphe == NULL)
@@ -123,7 +168,17 @@ void displayGraphe(T_GRAPHE* Graphe)
 	printf("\ntaille = %d", Graphe->taille);
 
 	for(int i=0; i<Graphe->taille; i++)
+	{
 		printf("\ngraphe[%d].mot = %s", i, Graphe->graphe[i].mot);
+		L_SUCC Liste_succ = Graphe->graphe[i].Liste_succ;
+
+		while(Liste_succ != NULL)
+		{
+			printf("->%s", Liste_succ->val->mot);
+			Liste_succ = Liste_succ->suiv;
+		}
+	}
+	printf("\n\n");
 }
 
 int main()
@@ -171,6 +226,7 @@ int main()
 			OK = 1; 
 		}
 	}
+    displayGraphe(&Graphe);
 
 	return 0;
 }
