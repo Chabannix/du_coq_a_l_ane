@@ -21,7 +21,7 @@ struct T_SOMMET
 
 typedef struct 
 {
-    T_SOMMET* graphe;
+    T_SOMMET* sommets;
     int taille;
 } T_GRAPHE;
 

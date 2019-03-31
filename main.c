@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "data.h"
+#include "dijsktra.h"
 
 
 int dico2graph(char* dico, T_GRAPHE* Graphe);
@@ -17,7 +18,7 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
 	if(dico==NULL || Graphe == NULL)
 		return 0;
 
-	if(Graphe->graphe != NULL || Graphe->taille != 0)
+	if(Graphe->sommets != NULL || Graphe->taille != 0)
 		return 0;
 
 	// Open file
@@ -45,7 +46,7 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
 		}
 	}
 	Graphe->taille = i;
-	Graphe->graphe = malloc(i*sizeof(T_SOMMET));
+	Graphe->sommets = malloc(i*sizeof(T_SOMMET));
 
 	// Stock words into graphe
 	for(i=0; i<Graphe->taille; i++)
@@ -53,7 +54,7 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
 		T_SOMMET sommet;
 		sommet.mot = tab_words[i];
 		sommet.Liste_succ = NULL;
-		Graphe->graphe[i] = sommet;
+		Graphe->sommets[i] = sommet;
 	}
 	alphabeSorting(Graphe);
 	constructSucc(Graphe);
@@ -73,8 +74,8 @@ int alphabeSorting(T_GRAPHE* Graphe)
 		sorting_over = 1;
 		for(int i=0; i<size-1; i++)
 		{
-			char* word1 = Graphe->graphe[i].mot;
-			char* word2 = Graphe->graphe[i+1].mot;
+			char* word1 = Graphe->sommets[i].mot;
+			char* word2 = Graphe->sommets[i+1].mot;
 
 			// compare the 2 words and swap them if need be
 			if( !isAlphabeSorted(word1,word2) )
@@ -112,7 +113,7 @@ int isWordInGraphe(char* word, T_GRAPHE* Graphe)
 		
 	for(int i=0; i<Graphe->taille; i++)
 	{	
-		if( strcmp(Graphe->graphe[i].mot, word)==0 )
+		if( strcmp(Graphe->sommets[i].mot, word)==0 )
 			return 1;
 	}
 	return 0;
@@ -125,22 +126,22 @@ void constructSucc(T_GRAPHE* Graphe)
 		
 	for(int i=0; i<Graphe->taille; i++)
 	{	
-		char* word1 = Graphe->graphe[i].mot;
+		char* word1 = Graphe->sommets[i].mot;
 		for(int j=0; j<Graphe->taille; j++)
 		{
 			if(j==i)
 				continue;
 
-			char* word2 = Graphe->graphe[j].mot;
+			char* word2 = Graphe->sommets[j].mot;
 			if( isSucc(word1,word2) )
 			{
-				L_SUCC* Liste_succ = &Graphe->graphe[i].Liste_succ;
+				L_SUCC* Liste_succ = &Graphe->sommets[i].Liste_succ;
 
 				while(*Liste_succ != NULL)
 					Liste_succ = &((*Liste_succ)->suiv);
 
                 (*Liste_succ) = malloc(sizeof(struct lsucc));
-                (*Liste_succ)->val = &Graphe->graphe[j];
+                (*Liste_succ)->val = &Graphe->sommets[j];
 			}
 			
 		}
@@ -169,8 +170,8 @@ void displayGraphe(T_GRAPHE* Graphe)
 
 	for(int i=0; i<Graphe->taille; i++)
 	{
-		printf("\ngraphe[%d].mot = %s", i, Graphe->graphe[i].mot);
-		L_SUCC Liste_succ = Graphe->graphe[i].Liste_succ;
+		printf("\ngraphe[%d].mot = %s", i, Graphe->sommets[i].mot);
+		L_SUCC Liste_succ = Graphe->sommets[i].Liste_succ;
 
 		while(Liste_succ != NULL)
 		{
@@ -186,10 +187,11 @@ int main()
 	printf("****  du coq a l'ane  ****\n");
 
 	T_GRAPHE Graphe;
-	Graphe.graphe = NULL;
+	Graphe.sommets = NULL;
 	Graphe.taille = 0;
 
-	dico2graph("dico.txt", &Graphe);
+    dico2graph("dico.txt", &Graphe);
+    displayGraphe(&Graphe);
 
 	int OK = 0;
 	printf("\nType the initial word\n");
@@ -226,7 +228,8 @@ int main()
 			OK = 1; 
 		}
 	}
-    displayGraphe(&Graphe);
 
+    dijsktraAlgo(&Graphe, initial_word, final_word);
+	
 	return 0;
 }
