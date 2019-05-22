@@ -6,6 +6,7 @@ struct T_SOMMET;
 typedef struct T_SOMMET* T_SUCC;
 typedef struct T_SOMMET  T_SOMMET;
 typedef struct lsucc*    L_SUCC;
+typedef struct DicoInfo DicoInfo;
 
 struct lsucc
 {
@@ -23,6 +24,13 @@ typedef struct
 {
     T_SOMMET* sommets;
     int taille;
+    int wordSize;
 } T_GRAPHE;
+
+struct DicoInfo
+{
+    int wordSize;
+    int wordsNumber;
+};
 
 #endif

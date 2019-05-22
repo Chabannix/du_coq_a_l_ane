@@ -10,18 +10,9 @@ struct T_ENSEMBLE
     int taille;
 };
 
-int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe)
-{
-    // check if sommet is in Graphe and return the corresponding index i, return -1 if not present
-    for(int i=0; i<Graphe->taille; i++)
-    {
-        if(&Graphe->sommets[i] == sommet)
-        {
-            return i;
-        }
-    }
-    return -1;
-}
+void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a);
+int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe);
+int check_a_in_S(struct T_ENSEMBLE S, T_SOMMET* a);
 
 void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
 {
@@ -126,6 +117,19 @@ void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
             k = parent[k];
         }
     }
+}
+
+int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe)
+{
+    // check if sommet is in Graphe and return the corresponding index i, return -1 if not present
+    for(int i=0; i<Graphe->taille; i++)
+    {
+        if(&Graphe->sommets[i] == sommet)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 int check_a_in_S(struct T_ENSEMBLE S, T_SOMMET* a)
