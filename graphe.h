@@ -127,7 +127,6 @@ int isWordInGraphe(char* word, T_GRAPHE* Graphe)
 
     for(int i=0; i<Graphe->taille; i++)
     {
-        char* toto = Graphe->sommets[i].mot;
         if( strcmp(Graphe->sommets[i].mot, word)==0 )
             return 1;
     }
