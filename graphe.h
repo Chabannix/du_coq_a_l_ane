@@ -32,6 +32,7 @@ void constructSucc(T_GRAPHE* Graphe)
 
                 (*Liste_succ) = malloc(sizeof(struct lsucc));
                 (*Liste_succ)->val = &Graphe->sommets[j];
+                (*Liste_succ)->suiv = NULL;
             }
 
         }
@@ -86,19 +87,22 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
     }
 
     // Extract words from file
-    char tab_words[Graphe->taille][Graphe->wordSize+1];    // 100 words of max 50 char
+    char tab_words[Graphe->taille][Graphe->wordSize+1];
     int dico_processing_over = 0;
 
     int i=0;
     while(!dico_processing_over)
     {
         char * word = tab_words[i];
-        if(fgets(word, Graphe->wordSize+10, file) == NULL)
+        if(fgets(word, Graphe->wordSize+1, file) == NULL){
             dico_processing_over = 1;
+        }
         else
         {
-            word[Graphe->wordSize] = '\0';
-            i++;
+            if( strcmp(word, "\n") != 0){
+                word[Graphe->wordSize] = '\0';
+                i++;
+            }
         }
     }
     if(i != Graphe->taille)
@@ -109,10 +113,8 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
     // Stock words into graphe
     for(i=0; i<Graphe->taille; i++)
     {
-        T_SOMMET sommet;
-        sommet.mot = tab_words[i];
-        sommet.Liste_succ = NULL;
-        Graphe->sommets[i] = sommet;
+        Graphe->sommets[i].mot = tab_words[i];
+        Graphe->sommets[i].Liste_succ = NULL;
     }
     alphabeSorting(Graphe);
     constructSucc(Graphe);
