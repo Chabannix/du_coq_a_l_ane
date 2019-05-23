@@ -28,7 +28,7 @@ int isSucc(char* word1,char* word2, int wordSize)
         if(word1[i] == word2[i])
             count_letters_in_common++;
     }
-    if(count_letters_in_common==3)
+    if(count_letters_in_common==wordSize-1)
         return 1;
     else
         return 0;
