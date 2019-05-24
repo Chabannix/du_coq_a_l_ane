@@ -2,6 +2,7 @@
 #define DICO
 
 #include "data.h"
+#include <stdio.h>
 
 DicoInfo analyseDico(char * filename);
 
@@ -39,7 +40,7 @@ DicoInfo analyseDico(char * filename)
         }
         if(wordSize > 0 && wordSize != ret.wordSize)
         {
-            printf("\nError : several words have not the same size : \n word 1 has %d letters while word %d has %d letters", ret.wordSize, ret.wordsNumber, wordSize);
+            printf("\nError : several words have not the same size : \n word 1 has %d letters while word %ld has %d letters", ret.wordSize, ret.wordsNumber, wordSize);
             fclose(file);
             return (DicoInfo){-1,-1};
         }

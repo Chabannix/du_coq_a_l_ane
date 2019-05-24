@@ -2,6 +2,8 @@
 #define GRAPHE
 
 #include "data.h"
+#include "word.h"
+#include <stdio.h>
 
 void constructSucc(T_GRAPHE* Graphe);
 int alphabeSorting(T_GRAPHE* Graphe);
@@ -45,12 +47,12 @@ int alphabeSorting(T_GRAPHE* Graphe)
         return 0;
 
     // Bubble sorting
-    int size = Graphe->taille;
+    long int size = Graphe->taille;
     int sorting_over = 0;
     while( !sorting_over )
     {
         sorting_over = 1;
-        for(int i=0; i<size-1; i++)
+        for(long int i=0; i<size-1; i++)
         {
             char* word1 = Graphe->sommets[i].mot;
             char* word2 = Graphe->sommets[i+1].mot;
@@ -88,13 +90,13 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
 
     // Extract words from file
     char** tab_words = malloc(Graphe->taille*sizeof(char*));
-    for(size_t i = 0; i<Graphe->taille; i++){
+    for(long int i = 0; i<Graphe->taille; i++){
         tab_words[i] = malloc( (Graphe->wordSize+1) * sizeof(char) );
         memset(tab_words[i], 0, (Graphe->wordSize+1) * sizeof(char));
     }
     int dico_processing_over = 0;
 
-    int i=0;
+    long int i = 0;
     while(!dico_processing_over)
     {
         char * word = tab_words[i];
@@ -130,7 +132,6 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
 
 int isWordInGraphe(char* word, T_GRAPHE* Graphe)
 {
-    char* word0 = Graphe->sommets[0].mot;
     if(word == NULL || Graphe == NULL)
         return 0;
 

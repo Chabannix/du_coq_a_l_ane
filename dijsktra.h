@@ -3,24 +3,25 @@
 
 #include "data.h"
 #include <math.h>
+#include <stdio.h>
 
 struct T_ENSEMBLE
 {
     T_SOMMET** sommets;
-    int taille;
+    long int taille;
 };
 
 void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a);
-int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe);
+long int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe);
 int check_a_in_S(struct T_ENSEMBLE S, T_SOMMET* a);
 
 void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
 {
-    int d = -1;
-    int a = -1;
+    long int d = -1;
+    long int a = -1;
 
     // find the index of the T_SOMMET a et d in Graphe:
-    for(int i= 0; i<Graphe->taille; i++)
+    for(long int i=0; i<Graphe->taille; i++)
     {
         char* mot_i = Graphe->sommets[i].mot;
         if( strcmp(mot_i, mot_d)==0 )
@@ -32,7 +33,7 @@ void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
     // Construction of C
     struct T_ENSEMBLE C; // T_SOMMET which still have to be visited
     C.sommets = malloc(Graphe->taille*sizeof(T_SOMMET*));
-    for(int i= 0; i<Graphe->taille; i++)
+    for(long int i=0; i<Graphe->taille; i++)
     {
         C.sommets[i] = &(Graphe->sommets[i]);
     }
@@ -41,34 +42,29 @@ void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
     // Construction of S
     struct T_ENSEMBLE S; // T_SOMMET which still have to be visited
     S.sommets = malloc(Graphe->taille*sizeof(T_SOMMET*));
-    for(int i=0; i<Graphe->taille; i++)
+    for(long int i=0; i<Graphe->taille; i++)
     {
         S.sommets[i] = NULL;
     }
     S.taille = Graphe->taille;
 
     // Construction of PCC
-    int PCC[Graphe->taille];
-    for(int i=0; i<Graphe->taille; i++)
+    long int PCC[Graphe->taille];
+    for(long int i=0; i<Graphe->taille; i++)
     {
         if(i == d)
             PCC[i] = 0;
         else
-            PCC[i] = 1000;
+            PCC[i] = (long int)INFINITY;
     }
 
-    for(int i=0; i<Graphe->taille; i++)
-    {
-        T_SOMMET* sommet_i =  &(Graphe->sommets[i]);
-    }
-
-    long unsigned int* parent = malloc(Graphe->taille * sizeof(long unsigned int));
-    memset(parent, 0, Graphe->taille*sizeof(long unsigned int));
+    long int* parent = malloc(Graphe->taille * sizeof(long int));
+    memset(parent, 0, Graphe->taille*sizeof(long int));
     do{
         // we look for the T_SOMMET j of C which has the lower value PCCj
-        int PCCmin = 1000;
-        int j = 0;
-        for(int i=0; i<Graphe->taille; i++)
+        long int PCCmin = (long int)INFINITY;
+        long int j = 0;
+        for(long int i=0; i<Graphe->taille; i++)
         {
             if(C.sommets[i] == NULL)
                 continue;
@@ -89,7 +85,7 @@ void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
         L_SUCC succ_k = sommet_j->Liste_succ;
         while(succ_k != NULL)
         {
-            int k = findSommet(succ_k->val, Graphe);
+            long int k = findSommet(succ_k->val, Graphe);
             if(PCC[k] > PCC[j] + 1)
             {
                 PCC[k] = PCC[j] + 1;
@@ -97,16 +93,15 @@ void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
             }
             succ_k = succ_k->suiv;
         }
-
-
     }while( check_a_in_S(S, &Graphe->sommets[a]) == 0 );
 
     // display the solution
     int over = 0;
-    int k = a;
+    long int k = a;
     while( !over )
     {
-        printf("%s", Graphe->sommets[k].mot);
+        char* word = Graphe->sommets[k].mot;
+        printf("%s", word);
         if(k==d)
         {
             printf("\n");
@@ -120,10 +115,10 @@ void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
     }
 }
 
-int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe)
+long int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe)
 {
     // check if sommet is in Graphe and return the corresponding index i, return -1 if not present
-    for(int i=0; i<Graphe->taille; i++)
+    for(long int i=0; i<Graphe->taille; i++)
     {
         if(&Graphe->sommets[i] == sommet)
         {
@@ -135,7 +130,7 @@ int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe)
 
 int check_a_in_S(struct T_ENSEMBLE S, T_SOMMET* a)
 {
-    for(int i=0; i< S.taille; i++)
+    for(long int i=0; i< S.taille; i++)
     {
         if(S.sommets[i] == a)
             return 1;

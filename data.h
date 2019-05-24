@@ -23,14 +23,14 @@ struct T_SOMMET
 typedef struct 
 {
     T_SOMMET* sommets;
-    long unsigned int taille;
-    unsigned int wordSize;
+    long  int taille;
+    int wordSize;
 } T_GRAPHE;
 
 struct DicoInfo
 {
-    unsigned int wordSize;
-    long unsigned int wordsNumber;
+    int wordSize;
+    long int wordsNumber;
 };
 
 #endif
