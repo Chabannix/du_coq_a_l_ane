@@ -62,7 +62,8 @@ void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
         T_SOMMET* sommet_i =  &(Graphe->sommets[i]);
     }
 
-    int parent[Graphe->taille];
+    long unsigned int* parent = malloc(Graphe->taille * sizeof(long unsigned int));
+    memset(parent, 0, Graphe->taille*sizeof(long unsigned int));
     do{
         // we look for the T_SOMMET j of C which has the lower value PCCj
         int PCCmin = 1000;

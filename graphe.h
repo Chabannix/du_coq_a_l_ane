@@ -87,7 +87,11 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
     }
 
     // Extract words from file
-    char tab_words[Graphe->taille][Graphe->wordSize+1];
+    char** tab_words = malloc(Graphe->taille*sizeof(char*));
+    for(size_t i = 0; i<Graphe->taille; i++){
+        tab_words[i] = malloc( (Graphe->wordSize+1) * sizeof(char) );
+        memset(tab_words[i], 0, (Graphe->wordSize+1) * sizeof(char));
+    }
     int dico_processing_over = 0;
 
     int i=0;
