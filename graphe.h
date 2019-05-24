@@ -108,6 +108,9 @@ int dico2graph(char* dico, T_GRAPHE* Graphe)
                 i++;
             }
         }
+        if(i >= Graphe->taille){
+            dico_processing_over = 1;
+        }
     }
     if(i != Graphe->taille)
     {
