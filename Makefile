@@ -1,7 +1,12 @@
+CC=gcc
+CFLAGS=-Wall -g       # options de compilations
+LDFLAGS=              # options de l'éditions de liens
+
 exe: main.o
-	gcc -o exe main.o
+	$(CC) -o exe main.o $(LDFLAGS)
 
 main.o: main.c
-	gcc -g -c main.c
+	$(CC) -c main.c $(CFLAGS)
+
 clean:
-	rm exe main.o
+	rm -rf *.o exe
