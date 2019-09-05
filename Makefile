@@ -1,12 +1,16 @@
+BUILD_DIR=build_makefile
+
 CC=gcc
 CFLAGS=-Wall -g       # options de compilations
 LDFLAGS=              # options de l'éditions de liens
 
-exe: main.o
-	$(CC) -o exe main.o $(LDFLAGS)
+$(BUILD_DIR)/exe: $(BUILD_DIR)/main.o
+	mkdir -p $(@D)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-main.o: main.c
-	$(CC) -c main.c $(CFLAGS)
+$(BUILD_DIR)/main.o: main.c
+	mkdir -p $(@D)
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
-	rm -rf *.o exe
+	rm -rf $(BUILD_DIR)/*.o $(BUILD_DIR)/exe
