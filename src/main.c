@@ -5,7 +5,7 @@
 #include "word.h"
 #include "dico.h"
 #include "graphe.h"
-#include "dijsktra.h"
+#include "dijkstra.h"
 
 int main()
 {
@@ -16,7 +16,7 @@ int main()
     Graphe.taille = 0;
     Graphe.wordSize = 0;
 
-    DicoInfo dicoInfo = analyseDico("umot5.txt");
+    DicoInfo dicoInfo = analyseDico("../dico/umot5.txt");
     if(dicoInfo.wordSize == -1)
     {
         printf("\nError : dico not valid\n");
@@ -24,7 +24,7 @@ int main()
     }
     Graphe.wordSize = dicoInfo.wordSize;
     Graphe.taille = dicoInfo.wordsNumber;
-    dico2graph("umot5.txt", &Graphe);
+    dico2graph("../dico/umot5.txt", &Graphe);
 
     int OK = 0;
     printf("\nType the initial word\n");
