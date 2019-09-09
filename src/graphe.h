@@ -147,7 +147,7 @@ void displayGraphe(T_GRAPHE* Graphe)
 {
     if(Graphe == NULL)
         return;
-    printf("\ntaille = %d", Graphe->taille);
+    printf("\ntaille = %ld", Graphe->taille);
 
     for(int i=0; i<Graphe->taille; i++)
     {

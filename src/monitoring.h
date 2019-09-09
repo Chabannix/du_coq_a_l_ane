@@ -4,7 +4,7 @@
 clock_t begin, end;
 float elapsed_time = 0;
 
-#define MEASURE_TIME(code, msg) \ 
+#define MEASURE_TIME(code, msg) \
 begin = clock(); \
 code; \
 end = clock(); \
