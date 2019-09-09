@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 #include "data.h"
 #include "word.h"
 #include "dico.h"
 #include "graphe.h"
 #include "dijkstra.h"
+#include "monitoring.h"
 
 int main()
 {
@@ -16,7 +18,10 @@ int main()
     Graphe.taille = 0;
     Graphe.wordSize = 0;
 
-    DicoInfo dicoInfo = analyseDico("../dico/umot5.txt");
+    char* dicoFilename = "../dico/umot5.txt";
+    
+    MEASURE_TIME( DicoInfo dicoInfo = analyseDico(dicoFilename), "analyseDico");
+    
     if(dicoInfo.wordSize == -1)
     {
         printf("\nError : dico not valid\n");
@@ -24,7 +29,7 @@ int main()
     }
     Graphe.wordSize = dicoInfo.wordSize;
     Graphe.taille = dicoInfo.wordsNumber;
-    dico2graph("../dico/umot5.txt", &Graphe);
+    dico2graph(dicoFilename, &Graphe);
 
     int OK = 0;
     printf("\nType the initial word\n");
@@ -60,8 +65,7 @@ int main()
             OK = 1;
         }
     }
-
-    dijsktraAlgo(&Graphe, initial_word, final_word);
+    MEASURE_TIME(dijsktraAlgo(&Graphe, initial_word, final_word), "dijsktraAlgo");
 
     return 0;
 }
