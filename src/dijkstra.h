@@ -1,5 +1,5 @@
-#ifndef DIJSKTRA_H
-#define DIJSKTRA_H
+#ifndef DIJKSTRA_H
+#define DIJKSTRA_H
 
 #include "data.h"
 #include <math.h>
@@ -11,11 +11,11 @@ struct T_ENSEMBLE
     long int taille;
 };
 
-void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a);
+void dijkstraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a);
 long int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe);
 int check_a_in_S(struct T_ENSEMBLE S, T_SOMMET* a);
 
-void dijsktraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
+void dijkstraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
 {
     long int d = -1;
     long int a = -1;

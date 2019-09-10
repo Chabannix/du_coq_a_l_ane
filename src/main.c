@@ -65,7 +65,7 @@ int main()
             OK = 1;
         }
     }
-    MEASURE_TIME(dijsktraAlgo(&Graphe, initial_word, final_word), "dijsktraAlgo");
+    MEASURE_TIME(dijkstraAlgo(&Graphe, initial_word, final_word), "dijkstraAlgo");
 
     return 0;
 }
