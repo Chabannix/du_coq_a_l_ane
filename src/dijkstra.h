@@ -70,6 +70,8 @@ void dijkstraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
         // we look for the T_SOMMET j of C which has the lower value PCCj
         long int PCCmin = (long int)INFINITY;
         long int j = 0;
+        int wordsNotConnected = 1;
+
         for(long int i=0; i<Graphe->taille; i++)
         {
             if(C.sommets[i] == NULL)
@@ -77,13 +79,24 @@ void dijkstraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a)
 
             if(PCC[i] < PCCmin)
             {
+                wordsNotConnected = 0;
                 PCCmin = PCC[i];
                 j = i;
             }
         }
+
+        // if all words in C have an infinite PCC : it means that S and C have not connections anymore,
+        // the updates of PCC in S are not affecting any words (and their PCC) in C
+        // -> the algo is over, the is no path bewteen the 2 words
+        if(wordsNotConnected){
+            printf("\rNo path found from %s to %s", Graphe->sommets[d].mot, Graphe->sommets[a].mot);
+            return;
+        }
+
+
+        // otherwise we keep updating C and S
         T_SOMMET* sommet_j =  &(Graphe->sommets[j]);
 
-        // Update S and C
         if(S.sommets[j] == NULL){
             S.sommets[j] = sommet_j;
             S.taille++;
