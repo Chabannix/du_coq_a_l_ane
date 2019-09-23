@@ -36,7 +36,6 @@ void constructSucc(T_GRAPHE* Graphe)
                 (*Liste_succ)->val = &Graphe->sommets[j];
                 (*Liste_succ)->suiv = NULL;
             }
-
         }
     }
 }
