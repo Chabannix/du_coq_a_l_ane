@@ -8,6 +8,8 @@
 #include "graphe.h"
 #include "dijkstra.h"
 #include "monitoring.h"
+#include "textVisual.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -16,11 +18,11 @@ int main(int argc, char *argv[])
     printf("\n************************************************\n");
 
     if(argc < 2){
-        fprintf(stderr, "\nError : a dictionnary must be specified\n");
+        LIGHT_RED(printf("\nError : a dictionnary must be specified\n"))
         return 0;
     }
     if(argc > 2){
-        fprintf(stderr, "\nError : too many arguments specified\n");
+        LIGHT_RED(printf("\nError : too many arguments specified\n"))
         return 0;
     }
 
@@ -36,7 +38,7 @@ int main(int argc, char *argv[])
     
     if(dicoInfo.wordSize == -1)
     {
-        fprintf(stderr, "\nError : dico not valid\n");
+        LIGHT_RED(printf("\nError : dico not valid\n"))
         return 0;
     }
     Graphe.wordSize = dicoInfo.wordSize;
@@ -45,15 +47,15 @@ int main(int argc, char *argv[])
 
     while(1){
         int OK = 0;
-        printf("\n-- Type the initial word\n"); fflush(stdout);
+        BOLD(printf("\nType the initial word\n");); fflush(stdout);
         char* initial_word = malloc(Graphe.wordSize*sizeof(char));
-
+        
         while( !OK )
         {
-            scanf("%s", initial_word);
+            ITALIC(scanf("%s", initial_word);)
             if( !isWordInGraphe(initial_word, &Graphe) )
             {
-                fprintf(stderr, "Error : the word is not in the dictionnary, type another word\n");
+                LIGHT_RED(printf("Error : the word is not in the dictionnary, type another word\n");)
                 memset(initial_word, 0, Graphe.wordSize);
             }
             else
@@ -63,14 +65,14 @@ int main(int argc, char *argv[])
         }
 
         OK = 0;
-        printf("\n-- Type the final word\n");
+        BOLD(printf("\nType the final word\n");)
         char* final_word = malloc(Graphe.wordSize*sizeof(char));;
         while( !OK )
         {
-            scanf("%s", final_word);
+            ITALIC(scanf("%s", final_word);)
             if( !isWordInGraphe(final_word, &Graphe) )
             {
-                fprintf(stderr, "Error : the word is not in the dictionnary, type another word\n");
+                LIGHT_RED(printf("Error : the word is not in the dictionnary, type another word\n"))
                 memset(final_word, 0, Graphe.wordSize);
             }
             else

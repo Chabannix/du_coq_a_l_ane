@@ -4,6 +4,7 @@
 #include "data.h"
 #include <math.h>
 #include <stdio.h>
+#include "textVisual.h"
 
 struct T_ENSEMBLE
 {
@@ -95,7 +96,7 @@ void dijkstraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a) {
         // the updates of PCC in S are not affecting any words (and their PCC) in C
         // -> the algo is over, there is no path between the 2 words
         if (wordsNotConnected) {
-            printf("\rNo path found from %s to %s", Graphe->sommets[d].mot, Graphe->sommets[a].mot);
+            LIGHT_RED(printf("\nNo path found from %s to %s\n", Graphe->sommets[d].mot, Graphe->sommets[a].mot))
             return;
         }
 
@@ -123,7 +124,7 @@ void dijkstraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a) {
         }
     } while (isSommetInEnsemble(S, &Graphe->sommets[a]) == 0);
 
-    displaySolution(Graphe, parent, d, a);
+    LIGHT_GREEN(displaySolution(Graphe, parent, d, a));
 }
 
 
@@ -147,7 +148,7 @@ void displaySolution(T_GRAPHE* Graphe, long int *parent, long int d, long int a)
         }
         else
         {
-            printf("->");
+            printf(" <-- ");
             k = parent[k];
             lengthSolution++;
         }
