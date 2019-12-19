@@ -142,11 +142,33 @@ void displaySolution(T_GRAPHE* Graphe, long int *parent, long int d, long int a)
 long int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe)
 {
     // check if sommet is in Graphe and return the corresponding index i, return -1 if not present
-    for(long int i=0; i<Graphe->taille; i++)
+    char* word = sommet->mot;
+
+    if(word == NULL || Graphe == NULL)
+        return -1;
+
+
+    // binary search algorithm
+    int start = 0;
+    int end = Graphe->taille;
+
+    while(start <= end)
     {
-        if(&Graphe->sommets[i] == sommet)
+        int index = start + (end-start)/2;
+        int ret = sortWords(Graphe->sommets[index].mot, word, Graphe->wordSize);
+
+        switch(ret)
         {
-            return i;
+            case 0:
+                return index;
+
+            case 1:
+                start = index + 1;
+                break;
+
+            case -1:
+                end = index - 1;
+                break;
         }
     }
     return -1;

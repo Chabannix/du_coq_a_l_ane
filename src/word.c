@@ -28,3 +28,17 @@ int isSucc(char* word1,char* word2, int wordSize)
     else
         return 0;
 }
+
+int sortWords(char* word1, char* word2, int wordSize)
+{
+    for(int i=0; i<wordSize; i++)
+    {
+        if(word1[i] < word2[i])
+            return 1;
+        if(word1[i] > word2[i])
+            return -1;
+    }
+
+    // word1 and word2 are the same word
+    return 0;
+}
