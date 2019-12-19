@@ -1,5 +1,8 @@
-#include "dijkstra.h"
+#include <stdlib.h>
+#include <string.h>
 
+#include "dijkstra.h"
+#include "word.h"
 
 void dijkstraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a) {
     long int d = -1;

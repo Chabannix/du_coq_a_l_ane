@@ -3,7 +3,6 @@
 
 #include "data.h"
 #include "word.h"
-#include <stdio.h>
 
 void constructSucc(T_GRAPHE* Graphe);
 int  alphabeSorting(T_GRAPHE* Graphe);

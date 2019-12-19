@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "graphe.h"
 
 void constructSucc(T_GRAPHE* Graphe)
@@ -5,7 +9,6 @@ void constructSucc(T_GRAPHE* Graphe)
     if(Graphe == NULL)
         return;
 
-    char* word2 = malloc(Graphe->wordSize*sizeof(char));
     for(int i=0; i<Graphe->taille; i++)
     {
         char* word1 = Graphe->sommets[i].mot;
