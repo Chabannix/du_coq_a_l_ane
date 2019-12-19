@@ -105,7 +105,7 @@ void dijkstraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a) {
             }
             succ_k = succ_k->suiv;
         }
-    } while (isSommetInEnsemble(S, &Graphe->sommets[a]) == 0);
+    } while (isSommetInEnsemble(Graphe, S, &Graphe->sommets[a]) == 0);
 
     LIGHT_GREEN(displaySolution(Graphe, parent, d, a));
 }
@@ -174,12 +174,11 @@ long int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe)
     return -1;
 }
 
-int isSommetInEnsemble(struct T_ENSEMBLE S, T_SOMMET* a)
+int isSommetInEnsemble( T_GRAPHE* Graphe, struct T_ENSEMBLE S, T_SOMMET* a)
 {
-    for(long int i=0; i< S.taille; i++)
-    {
-        if(S.sommets[i] == a)
-            return 1;
-    }
+    int index = findSommet(a, Graphe);
+    if( S.sommets[index] == a )
+        return 1;
+
     return 0;
 }

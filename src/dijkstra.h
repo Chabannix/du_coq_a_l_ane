@@ -15,7 +15,7 @@ struct T_ENSEMBLE
 
 void     dijkstraAlgo(T_GRAPHE* Graphe, char* mot_d, char* mot_a);
 long int findSommet(T_SOMMET* sommet, T_GRAPHE* Graphe);
-int      isSommetInEnsemble(struct T_ENSEMBLE S, T_SOMMET* a);
+int      isSommetInEnsemble( T_GRAPHE* Graphe, struct T_ENSEMBLE S, T_SOMMET* a);
 void     displaySolution(T_GRAPHE* Graphe, long int *parent, long int d, long int a);
 
 #endif
